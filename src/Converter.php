@@ -101,6 +101,7 @@ class Converter
     private function setCustomSymbols(int $base, string $customSymbols = null)
     {
         if (!$customSymbols) {
+            $this->bases[$base] = Defaults::base($base);
             return;
         }
 
