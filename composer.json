@@ -1,11 +1,11 @@
 {
-    "name": "WladySpb/BaseConverter",
+    "name": "smart-lib/base-converter",
     "description": "Convert numbers between any base you want, including negative numbers and floating point numbers",
     "keywords": [
         "numbers",
         "converter"
     ],
-    "homepage": "https://github.com/WladySpb/BaseConverter",
+    "homepage": "https://github.com/smart-lib/base-converter",
     "license": "GPL-3.0 License",
     "authors": [
         {
