@@ -8,21 +8,46 @@ use WladySpb\BaseConverter\Exceptions\InvalidNumberBaseException;
 
 class Base
 {
+    /**
+     * @var int
+     */
     protected $base;
 
+    /**
+     * @var array
+     */
     protected $characters;
+
+    /**
+     * @var bool
+     */
+    protected $defaultCharset = false;
 
     /**
      * Base constructor.
      * @param int $base
      * @param string $characters
      * @throws InvalidNumberBaseException
+     * @throws \Exception
      */
-    public function __construct(int $base, string $characters)
+    public function __construct(int $base, string $characters = null)
     {
+        if (null === $characters) {
+            $characters = Defaults::base($base);
+            $this->defaultCharset = true;
+        }
+
         $this->validate($base, $characters);
         $this->base = $base;
         $this->characters = str_split($characters, 1);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDefault():bool
+    {
+        return $this->defaultCharset;
     }
 
     /**
