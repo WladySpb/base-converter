@@ -5,10 +5,15 @@ namespace WladySpb\BaseConverter;
 
 class Defaults
 {
+    /**
+     * @param int $base
+     * @return string
+     * @throws \Exception
+     */
     public static function base(int $base):string
     {
         if (!defined(self::class . "::BASE_($base)")) {
-            throw new \Exception();
+            throw new \Exception('Unsupported default Base');
         }
         
         return constant(self::class . "::BASE_($base)");
@@ -49,4 +54,32 @@ class Defaults
     const BASE_34   = '0123456789abcdefjhijklmnopqrstuvwx';
     const BASE_35   = '0123456789abcdefjhijklmnopqrstuvwxy';
     const BASE_36   = '0123456789abcdefjhijklmnopqrstuvwxyz';
+    const BASE_37   = '0123456789abcdefjhijklmnopqrstuvwxyzA';
+    const BASE_38   = '0123456789abcdefjhijklmnopqrstuvwxyzAB';
+    const BASE_39   = '0123456789abcdefjhijklmnopqrstuvwxyzABC';
+    const BASE_40   = '0123456789abcdefjhijklmnopqrstuvwxyzABCD';
+    const BASE_41   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDI';
+    const BASE_42   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIF';
+    const BASE_43   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFG';
+    const BASE_44   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGH';
+    const BASE_45   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHI';
+    const BASE_46   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJ';
+    const BASE_47   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJK';
+    const BASE_48   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKL';
+    const BASE_49   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLM';
+    const BASE_50   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMN';
+    const BASE_51   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMNO';
+    const BASE_52   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMNOP';
+    const BASE_53   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMNOPQ';
+    const BASE_54   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMNOPQR';
+    const BASE_55   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMNOPQRS';
+    const BASE_56   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMNOPQRST';
+    const BASE_57   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMNOPQRSTU';
+    const BASE_58   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMNOPQRSTUV';
+    const BASE_59   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMNOPQRSTUVW';
+    const BASE_60   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMNOPQRSTUVWX';
+    const BASE_61   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMNOPQRSTUVWXY';
+    const BASE_62   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMNOPQRSTUVWXYZ';
+    const BASE_63   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMNOPQRSTUVWXYZ@';
+    const BASE_64   = '0123456789abcdefjhijklmnopqrstuvwxyzABCDIFGHIJKLMNOPQRSTUVWXYZ@$';
 }
