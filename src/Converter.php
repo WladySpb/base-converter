@@ -11,43 +11,44 @@ class Converter
     public const BASE_8 = 8;
     public const BASE_10 = 10;
     public const BASE_16 = 16;
+    public const BASE_32 = 32;
     public const BASE_36 = 36;
+    public const BASE_62 = 62;
+    public const BASE_64 = 64;
 
     private $fromBase = 10;
     private $toBase = 16;
     private $negateSymbol = '-';
     private $delimiter = '.';
 
-    private $bases = [
-        self::BASE_2 => '01',
-        self::BASE_8 => '01234567',
-        self::BASE_10 => '0123456789',
-        self::BASE_16 => '0123456789ABCDEF',
-    ];
+    /**
+     * @var Base[]
+     */
+    private $bases = [];
 
     /**
      * @param int $base
-     * @param string|null $customSymbols
+     * @param string|null $customCharset
      * @return $this
-     * @throws Exception
+     * @throws InvalidNumberBaseException
      */
-    public function from(int $base, string $customSymbols = null)
+    public function from(int $base, string $customCharset = null)
     {
         $this->fromBase = $base;
-        $this->setCustomSymbols($base, $customSymbols);
+        $this->setBase($base, $customCharset);
         return $this;
     }
 
     /**
      * @param int $base
-     * @param string|null $customSymbols
+     * @param string|null $customCharset
      * @return $this
-     * @throws Exception
+     * @throws InvalidNumberBaseException
      */
-    public function to(int $base, string $customSymbols = null)
+    public function to(int $base, string $customCharset = null)
     {
         $this->toBase = $base;
-        $this->setCustomSymbols($base, $customSymbols);
+        $this->setBase($base, $customCharset);
         return $this;
     }
 
@@ -56,7 +57,7 @@ class Converter
      * @param int|null $from
      * @param int|null $to
      * @return string
-     * @throws Exception
+     * @throws InvalidNumberBaseException
      */
     public function convert(string $number, int $from = null, int $to = null)
     {
@@ -87,55 +88,70 @@ class Converter
         );
     }
 
+    /**
+     * @param string $number
+     * @return float|int|string
+     * @throws Exceptions\IndexOutOfBondException
+     */
     private function convertNumber(string $number)
     {
-//        return base_convert($number, $this->fromBase, $this->toBase);
-        return $this->naiveImplementation($number, $this->bases[$this->fromBase], $this->bases[$this->toBase]);
+        if ($this->canSimpleConvert() ) {
+            return base_convert($number, $this->fromBase, $this->toBase);
+        }
+
+        return $this->baseConvert($number, $this->bases[$this->fromBase], $this->bases[$this->toBase]);
+    }
+
+    private function  canSimpleConvert() : bool
+    {
+        return (
+                $this->bases[$this->fromBase]->isDefault()
+            &&  $this->bases[$this->toBase]->isDefault()
+            &&  $this->fromBase <= 36
+            &&  $this->toBase <= 36
+        );
+    }
+    /**
+     * @param int $base
+     * @param string|null $customCharset
+     * @throws InvalidNumberBaseException
+     */
+    private function setBase(int $base, string $customCharset = null)
+    {
+        $this->bases[$base] = new Base($base, $customCharset);
     }
 
     /**
-     * @param int $base
-     * @param string|null $customSymbols
-     * @throws InvalidNumberBaseException
+     * @param $numberInput
+     * @param Base $fromBase
+     * @param Base $toBase
+     * @return float|int|string
+     * @throws Exceptions\IndexOutOfBondException
      */
-    private function setCustomSymbols(int $base, string $customSymbols = null)
+    private function baseConvert($numberInput, Base $fromBase, Base $toBase)
     {
-        if (!$customSymbols) {
-            $this->bases[$base] = Defaults::base($base);
-            return;
+        if ($fromBase->charset() == $toBase->charset()) {
+            return $numberInput;
         }
 
-        if (strlen($customSymbols) != $base) {
-            throw new InvalidNumberBaseException($base, $customSymbols);
-        }
-
-        $this->bases[$base] = $customSymbols;
-    }
-
-    private function naiveImplementation($numberInput, $fromBaseInput, $toBaseInput)
-    {
-        if ($fromBaseInput==$toBaseInput) return $numberInput;
-
-        $fromBase = str_split($fromBaseInput,1);
-        $toBase = str_split($toBaseInput,1);
         $number = str_split($numberInput,1);
 
         /** Если приводим к десятичному - каждую цифру умножаем на исходную базу в степени кол-ва символов с конца */
-        if ($toBaseInput == '0123456789')
+        if ($toBase->charset() == '0123456789')
         {
-            return $this->convertToBaseTen($number, $fromBase);
+            return $this->convertToBaseTen($number, $fromBase->charset());
         }
 
         /** Если исходная база - не десятичная, сначала приводим к десятичной (видимо, это самый быстрый вариант) */
-        if ($fromBaseInput != '0123456789')
-            $numberInput = $this->convertToBaseTen($number, $fromBase);
+        if ($fromBase->charset() != '0123456789')
+            $numberInput = $this->convertToBaseTen($number, $fromBase->charset());
 
 
         /** Если число меньше, чем длина желаемой базы - просто возвращаем одну цифру из желаемой базы */
-        if ($numberInput < strlen($toBaseInput))
-            return $toBase[$numberInput];
+        if ($numberInput < $toBase->base())
+            return $toBase->char($numberInput);
 
-        return $this->convertTenToBase($numberInput, $toBase);
+        return $this->convertTenToBase($numberInput, $toBase->charset());
     }
 
     private function convertToBaseTen(array $number, array $fromBase)

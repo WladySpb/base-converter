@@ -72,6 +72,11 @@ class Base
         return $this->characters[$index];
     }
 
+    public function charset(): array
+    {
+        return $this->characters;
+    }
+
     /**
      * @param int $base
      * @param string $characters
