@@ -2,22 +2,49 @@
 
 Convert numbers between any base you want, including negative numbers and floating point numbers
 
+* Including default bases from 2 to 64 symbols
+* Convert from and to custom charset
+* Convert negate numbers
+* Convert float numbers(with delimiter, without exponent)
+* Customize negate symbol and float delimiter  
 
 ## Install
 
 Via Composer
 
 ``` bash
-$ composer require wladyspb/baseconverter
+$ composer require smart-lib/base-converter
 ```
 
 ## Usage
+
+### Simple:
 
 ``` php
 $converter = new WladySpb/BaseConverter();
 echo $converter->convert(100500, 10, 36);
 echo $converter->convert(-100500, 10, 36);
-echo $converter->convert(100500.99, 10, 36);
+echo $converter->convert(100500.99, 10, 64);
+```
+
+### Custom charset:
+   
+   ``` php
+   $converter = new WladySpb/BaseConverter();
+   echo $converter
+       ->from(10)
+       ->to(6, 'QWERTY')
+       ->convert(100500, 10, 6);
+   ```
+
+### Change delimiter, change negate symbol:
+
+``` php
+$converter = new WladySpb/BaseConverter();
+echo $converter
+    ->from(10)
+    ->to(36, null, ',', '~')
+    ->convert(-100.500, 10, 36);
 ```
 
 ## Testing
@@ -28,12 +55,12 @@ $ phpunit
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/WladySpb/BaseConverter/blob/master/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/smart-lib/base-converter/blob/master/CONTRIBUTING.md) for details.
 
 ## Credits
 
 - [:author_name](https://github.com/WladySpb)
-- [All Contributors](https://github.com/WladySpb/BaseConverter/contributors)
+- [All Contributors](https://github.com/smart-lib/base-converter/contributors)
 
 ## License
 
