@@ -18,8 +18,6 @@ class Converter
 
     private $fromBase = 10;
     private $toBase = 16;
-    private $negateSymbol = '-';
-    private $delimiter = '.';
 
     /**
      * @var Base[]
@@ -69,19 +67,19 @@ class Converter
 
     private function negateNumber(string $number)
     {
-        return (strpos($number, $this->negateSymbol) === 0)
-            ? $this->negateSymbol . $this->floatingPointNumbers(substr($number, 1))
+        return (strpos($number, $this->bases[$this->fromBase]->negateSymbol()) === 0)
+            ? $this->bases[$this->toBase]->negateSymbol() . $this->floatingPointNumbers(substr($number, 1))
             : $this->floatingPointNumbers($number);
     }
 
     private function floatingPointNumbers(string $number)
     {
         return implode(
-            $this->delimiter,
+            $this->bases[$this->toBase]->delimiter(),
             array_map(
                 [$this, 'convertNumber'],
                 explode(
-                    $this->delimiter,
+                    $this->bases[$this->fromBase]->delimiter(),
                     $number
                 )
             )

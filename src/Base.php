@@ -18,6 +18,17 @@ class Base
      */
     protected $characters;
 
+
+    /**
+     * @var string
+     */
+    protected $negateSymbol;
+
+    /**
+     * @var string
+     */
+    protected $delimiter;
+
     /**
      * @var bool
      */
@@ -27,10 +38,12 @@ class Base
      * Base constructor.
      * @param int $base
      * @param string $characters
+     * @param string $delimiter
+     * @param string $negateSymbol
      * @throws InvalidNumberBaseException
      * @throws \Exception
      */
-    public function __construct(int $base, string $characters = null)
+    public function __construct(int $base, string $characters = null, string $delimiter = '.', string $negateSymbol = '-')
     {
         if (null === $characters) {
             $characters = Defaults::base($base);
@@ -40,6 +53,8 @@ class Base
         $this->validate($base, $characters);
         $this->base = $base;
         $this->characters = str_split($characters, 1);
+        $this->delimiter = $delimiter;
+        $this->negateSymbol = $negateSymbol;
     }
 
     /**
@@ -72,9 +87,25 @@ class Base
         return $this->characters[$index];
     }
 
+    /**
+     * @return array
+     */
     public function charset(): array
     {
         return $this->characters;
+    }
+
+    /**
+     * @return string
+     */
+    public function delimiter():string
+    {
+        return $this->delimiter;
+    }
+
+    public function negateSymbol():string
+    {
+        return $this->negateSymbol;
     }
 
     /**
