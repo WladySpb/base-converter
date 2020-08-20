@@ -4,9 +4,9 @@ Convert numbers between any base you want, including negative numbers and floati
 
 * Including default bases from 2 to 64 symbols
 * Convert from and to custom charset
-* Convert negate numbers
-* Convert float numbers(with delimiter, without exponent)
-* Customize negate symbol and float delimiter  
+* Convert negative numbers
+* Convert floating point numbers(with delimiter, without exponent)
+* Customize minus sign and float delimiter  
 
 ## Install
 
@@ -37,7 +37,7 @@ echo $converter->convert(100500.99, 10, 64);
        ->convert(100500, 10, 6);
    ```
 
-### Change delimiter, change negate symbol:
+### Change delimiter, change minus sign:
 
 ``` php
 $converter = new WladySpb/BaseConverter();
