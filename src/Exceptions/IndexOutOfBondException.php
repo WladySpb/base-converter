@@ -1,5 +1,5 @@
 <?php
-namespace WladySpb\BaseConverter\Exceptions;
+namespace SmartLib\BaseConverter\Exceptions;
 
 
 class IndexOutOfBondException extends \Exception

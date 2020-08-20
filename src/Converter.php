@@ -1,8 +1,8 @@
 <?php
 
-namespace WladySpb\BaseConverter;
+namespace SmartLib\BaseConverter;
 
-use WladySpb\BaseConverter\Exceptions\InvalidNumberBaseException;
+use SmartLib\BaseConverter\Exceptions\InvalidNumberBaseException;
 
 class Converter
 {

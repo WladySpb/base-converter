@@ -1,6 +1,6 @@
 <?php
 
-namespace WladySpb\BaseConverter;
+namespace SmartLib\BaseConverter;
 
 
 class Defaults

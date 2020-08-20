@@ -1,8 +1,8 @@
 <?php
 
-namespace WladySpb\BaseConverter\Test;
+namespace SmartLib\BaseConverter\Test;
 
-use WladySpb\BaseConverter\Base;
+use SmartLib\BaseConverter\Base;
 
 class BaseTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,7 +11,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
      * @dataProvider validOptions
      * @param int $base
      * @param string $characters
-     * @throws \WladySpb\BaseConverter\Exceptions\InvalidNumberBaseException
+     * @throws \SmartLib\BaseConverter\Exceptions\InvalidNumberBaseException
      * @return array
      */
     public function test__construct(int $base, string $characters)
