@@ -3,10 +3,10 @@
 namespace SmartLib\BaseConverter;
 
 
-use WladySpb\BaseConverter\Exceptions\IndexOutOfBondException;
-use WladySpb\BaseConverter\Exceptions\InvalidDelimiterException;
-use WladySpb\BaseConverter\Exceptions\InvalidNegateSymbolException;
-use WladySpb\BaseConverter\Exceptions\InvalidNumberBaseException;
+use SmartLib\BaseConverter\Exceptions\IndexOutOfBondException;
+use SmartLib\BaseConverter\Exceptions\InvalidDelimiterException;
+use SmartLib\BaseConverter\Exceptions\InvalidNegateSymbolException;
+use SmartLib\BaseConverter\Exceptions\InvalidNumberBaseException;
 
 class Base
 {

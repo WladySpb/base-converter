@@ -2,9 +2,10 @@
 
 namespace SmartLib\BaseConverter\Test;
 
+use PHPUnit\Framework\TestCase;
 use SmartLib\BaseConverter\Base;
 
-class BaseTest extends \PHPUnit_Framework_TestCase
+class BaseTest extends TestCase
 {
 
     /**
@@ -41,7 +42,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
     /**
      * @depends test__construct
      * @param array $data
-     * @throws \WladySpb\BaseConverter\Exceptions\IndexOutOfBondException
+     * @throws \SmartLib\BaseConverter\Exceptions\IndexOutOfBondException
      */
     public function testChar(array $data)
     {
