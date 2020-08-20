@@ -48,9 +48,14 @@ class Base
         if (null === $characters) {
             $characters = Defaults::base($base);
             $this->defaultCharset = true;
+        }elseif (Defaults::base($base) === $characters) {
+            $this->defaultCharset = true;
         }
 
-        $this->validate($base, $characters);
+        $this->validateBase($base, $characters);
+        $this->validateDelimiter($delimiter, $characters);
+        $this->validateNegateSymbol($negateSymbol, $characters);
+
         $this->base = $base;
         $this->characters = str_split($characters, 1);
         $this->delimiter = $delimiter;
@@ -113,10 +118,34 @@ class Base
      * @param string $characters
      * @throws InvalidNumberBaseException
      */
-    private function validate(int $base, string $characters)
+    private function validateBase(int $base, string $characters)
     {
         if ($base !== strlen($characters)) {
             throw new InvalidNumberBaseException($base, $characters);
+        }
+    }
+
+    /**
+     * @param string $delimiter
+     * @param string $characters
+     * @throws \Exception
+     */
+    private function validateDelimiter(string $delimiter, string $characters)
+    {
+        if (strpos($characters, $delimiter) !== false) {
+            throw new \Exception('Characters can\'t contains delimiter');
+        }
+    }
+
+    /**
+     * @param string $negateSymbol
+     * @param string $characters
+     * @throws \Exception
+     */
+    private function validateNegateSymbol(string $negateSymbol, string $characters)
+    {
+        if (strpos($characters, $negateSymbol) !== false) {
+            throw new \Exception('Characters can\'t contains negate symbol');
         }
     }
 }
