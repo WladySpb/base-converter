@@ -12,57 +12,33 @@ class BaseTest extends TestCase
      * @dataProvider validOptions
      * @param int $base
      * @param string $characters
+     * @param bool $default
      * @throws \SmartLib\BaseConverter\Exceptions\InvalidNumberBaseException
-     * @return array
+     * @throws \SmartLib\BaseConverter\Exceptions\IndexOutOfBondException
      */
-    public function test__construct(int $base, string $characters)
+    public function testCreateAndUseBase(int $base, string $characters, bool $default)
     {
         $object = new Base($base, $characters);
 
-        /** Assert case with NO throw Exceptions */
-        $this->assertTrue(true);
+        $this->assertEquals($base, $object->base());
+        $this->assertEquals($default, $object->isDefault());
 
-        return [$object, $base, $characters];
-    }
-
-
-    /**
-     * @depends test__construct
-     * @param array $data
-     */
-    public function testBase(array $data)
-    {
-        /** @var Base $object */
-        $object = $data[0];
-        $base = $data[1];
-
-        self::assertEquals($base, $object->base());
-    }
-
-    /**
-     * @depends test__construct
-     * @param array $data
-     * @throws \SmartLib\BaseConverter\Exceptions\IndexOutOfBondException
-     */
-    public function testChar(array $data)
-    {
-        /** @var Base $object */
-        $object = $data[0];
-        $characters = $data[2];
         $count = strlen($characters);
         for ($i = 0; $i < $count; $i++) {
-            self::assertEquals($characters[$i], $object->char($i));
+            $this->assertEquals($characters[$i], $object->char($i));
         }
     }
 
     public function validOptions()
     {
         return [
-            [2, '01'],
-            [8, '01234567'],
-            [10, '0123456789'],
-            [16, '0123456789abcdif'],
-            [36, '0123456789abcdifghijklmnopqrstuvwxyz'],
+            [2, '01', true],
+            [8, '01234567', true],
+            [10, '0123456789', true],
+            [16, '0123456789abcdef', true],
+            [36, '0123456789abcdefghijklmnopqrstuvwxyz', true],
+            [4, 'CBAS', false],
+            [10, 'abcdifghij', false],
         ];
     }
 }
