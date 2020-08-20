@@ -21,30 +21,30 @@ $ composer require smart-lib/base-converter
 ### Simple:
 
 ``` php
-$converter = new WladySpb/BaseConverter();
-echo $converter->convert(100500, 10, 36);
-echo $converter->convert(-100500, 10, 36);
-echo $converter->convert(100500.99, 10, 64);
+$converter = new SmartLib/BaseConverter();
+echo $converter->convert('100500', 10, 36);
+echo $converter->convert('-100500', 10, 36);
+echo $converter->convert('100500.99', 10, 64);
 ```
 
 ### Custom charset:
    
    ``` php
-   $converter = new WladySpb/BaseConverter();
+   $converter = new SmartLib/BaseConverter();
    echo $converter
        ->from(10)
        ->to(6, 'QWERTY')
-       ->convert(100500, 10, 6);
+       ->convert('100500', 10, 6);
    ```
 
 ### Change delimiter, change minus sign:
 
 ``` php
-$converter = new WladySpb/BaseConverter();
+$converter = new SmartLib/BaseConverter();
 echo $converter
     ->from(10)
     ->to(36, null, ',', '~')
-    ->convert(-100.500, 10, 36);
+    ->convert('-100.500', 10, 36);
 ```
 
 ## Testing
