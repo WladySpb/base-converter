@@ -3,6 +3,8 @@
 namespace SmartLib\BaseConverter;
 
 
+use SmartLib\BaseConverter\Exceptions\UnsupportedDefaultBaseException;
+
 class Defaults
 {
     /**
@@ -17,12 +19,12 @@ class Defaults
     /**
      * @param int $base
      * @return string
-     * @throws \Exception
+     * @throws UnsupportedDefaultBaseException
      */
     public static function base(int $base): string
     {
         if (!defined(self::class . "::BASE_{$base}")) {
-            throw new \Exception('Unsupported default Base');
+            throw new UnsupportedDefaultBaseException('Unsupported default Base');
         }
 
         return constant(self::class . "::BASE_{$base}");
