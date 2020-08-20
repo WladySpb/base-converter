@@ -37,8 +37,9 @@ class BaseTest extends TestCase
             [10, '0123456789', true],
             [16, '0123456789abcdef', true],
             [36, '0123456789abcdefghijklmnopqrstuvwxyz', true],
+            [64, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@$', true],
             [4, 'CBAS', false],
-            [10, 'abcdifghij', false],
+            [10, 'abcdefghij', false],
         ];
     }
 }
