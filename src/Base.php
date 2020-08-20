@@ -4,6 +4,8 @@ namespace SmartLib\BaseConverter;
 
 
 use SmartLib\BaseConverter\Exceptions\IndexOutOfBondException;
+use SmartLib\BaseConverter\Exceptions\NonUniqueCharactersException;
+use SmartLib\BaseConverter\Exceptions\UnsupportedDefaultBaseException;
 use SmartLib\BaseConverter\Exceptions\InvalidDelimiterException;
 use SmartLib\BaseConverter\Exceptions\InvalidNegateSymbolException;
 use SmartLib\BaseConverter\Exceptions\InvalidNumberBaseException;
@@ -43,7 +45,9 @@ class Base
      * @param string $delimiter
      * @param string $negateSymbol
      * @throws InvalidNumberBaseException
-     * @throws \Exception
+     * @throws UnsupportedDefaultBaseException
+     * @throws InvalidDelimiterException
+     * @throws InvalidNegateSymbolException
      */
     public function __construct(
         int $base,
@@ -58,12 +62,13 @@ class Base
             $this->defaultCharset = true;
         }
 
-        $this->validateBase($base, $characters);
+        $this->validateBaseLength($base, $characters);
         $this->validateDelimiter($delimiter, $characters);
         $this->validateNegateSymbol($negateSymbol, $characters);
 
         $this->base = $base;
         $this->characters = str_split($characters, 1);
+        $this->validateBaseCharacters($this->characters);
         $this->delimiter = $delimiter;
         $this->negateSymbol = $negateSymbol;
     }
@@ -124,10 +129,21 @@ class Base
      * @param string $characters
      * @throws InvalidNumberBaseException
      */
-    private function validateBase(int $base, string $characters)
+    private function validateBaseLength(int $base, string $characters)
     {
         if ($base !== strlen($characters)) {
             throw new InvalidNumberBaseException($base, $characters);
+        }
+    }
+
+    /**
+     * @param array $characters
+     * @throws NonUniqueCharactersException
+     */
+    private function validateBaseCharacters(array $characters)
+    {
+        if (array_unique($characters) !== $characters) {
+            throw new NonUniqueCharactersException();
         }
     }
 
