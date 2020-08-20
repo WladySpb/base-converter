@@ -45,12 +45,16 @@ class Base
      * @throws InvalidNumberBaseException
      * @throws \Exception
      */
-    public function __construct(int $base, string $characters = null, string $delimiter = '.', string $negateSymbol = '-')
-    {
+    public function __construct(
+        int $base,
+        string $characters = null,
+        string $delimiter = '.',
+        string $negateSymbol = '-'
+    ) {
         if (null === $characters) {
             $characters = Defaults::base($base);
             $this->defaultCharset = true;
-        }elseif (Defaults::base($base) === $characters) {
+        } elseif (Defaults::base($base) === $characters) {
             $this->defaultCharset = true;
         }
 
@@ -67,7 +71,7 @@ class Base
     /**
      * @return bool
      */
-    public function isDefault():bool
+    public function isDefault(): bool
     {
         return $this->defaultCharset;
     }
@@ -75,7 +79,7 @@ class Base
     /**
      * @return int
      */
-    public function base():int
+    public function base(): int
     {
         return $this->base;
     }
@@ -85,7 +89,7 @@ class Base
      * @return string
      * @throws IndexOutOfBondException
      */
-    public function char(int $index):string
+    public function char(int $index): string
     {
         if (!isset($this->characters[$index])) {
             throw new IndexOutOfBondException();
@@ -105,12 +109,12 @@ class Base
     /**
      * @return string
      */
-    public function delimiter():string
+    public function delimiter(): string
     {
         return $this->delimiter;
     }
 
-    public function negateSymbol():string
+    public function negateSymbol(): string
     {
         return $this->negateSymbol;
     }

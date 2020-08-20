@@ -93,22 +93,23 @@ class Converter
      */
     private function convertNumber(string $number)
     {
-        if ($this->canSimpleConvert() ) {
+        if ($this->canSimpleConvert()) {
             return base_convert($number, $this->fromBase, $this->toBase);
         }
 
         return $this->baseConvert($number, $this->bases[$this->fromBase], $this->bases[$this->toBase]);
     }
 
-    private function  canSimpleConvert() : bool
+    private function canSimpleConvert(): bool
     {
         return (
-                $this->bases[$this->fromBase]->isDefault()
-            &&  $this->bases[$this->toBase]->isDefault()
-            &&  $this->fromBase <= 36
-            &&  $this->toBase <= 36
+            $this->bases[$this->fromBase]->isDefault()
+            && $this->bases[$this->toBase]->isDefault()
+            && $this->fromBase <= 36
+            && $this->toBase <= 36
         );
     }
+
     /**
      * @param int $base
      * @param string|null $customCharset
@@ -132,22 +133,23 @@ class Converter
             return $numberInput;
         }
 
-        $number = str_split($numberInput,1);
+        $number = str_split($numberInput, 1);
 
         /** Если приводим к десятичному - каждую цифру умножаем на исходную базу в степени кол-ва символов с конца */
-        if ($toBase->charset() == '0123456789')
-        {
+        if ($toBase->charset() == '0123456789') {
             return $this->convertToBaseTen($number, $fromBase->charset());
         }
 
         /** Если исходная база - не десятичная, сначала приводим к десятичной (видимо, это самый быстрый вариант) */
-        if ($fromBase->charset() != '0123456789')
+        if ($fromBase->charset() != '0123456789') {
             $numberInput = $this->convertToBaseTen($number, $fromBase->charset());
+        }
 
 
         /** Если число меньше, чем длина желаемой базы - просто возвращаем одну цифру из желаемой базы */
-        if ($numberInput < $toBase->base())
+        if ($numberInput < $toBase->base()) {
             return $toBase->char($numberInput);
+        }
 
         return $this->convertTenToBase($numberInput, $toBase->charset());
     }
@@ -156,8 +158,8 @@ class Converter
     {
         $numberLength = count($number);
         $fromLen = count($fromBase);
-        $value=0;
-        for ($i = 0, $e = $numberLength-1; $i < $numberLength; $i++, $e--) {
+        $value = 0;
+        for ($i = 0, $e = $numberLength - 1; $i < $numberLength; $i++, $e--) {
             $value += (array_search($number[$i], $fromBase) * pow($fromLen, $e));
         }
         return $value;
@@ -166,14 +168,13 @@ class Converter
     private function convertTenToBase(string $number, array $toBase)
     {
         $value = '';
-        $toLen=count($toBase);
+        $toLen = count($toBase);
         /** Начиная с конца, заполняем строку цифрами */
-        while($number != '0')
-        {
+        while ($number != '0') {
             /** Остаток от деления цифры на длину целевой базы - номер нужного символа в целевой базе */
-            $value = $toBase[$number%$toLen].$value;
+            $value = $toBase[$number % $toLen] . $value;
             /** Цифру на каждой итерации делим на длину целевой базы */
-            $number = floor($number/$toLen);
+            $number = floor($number / $toLen);
         }
         return $value;
     }
