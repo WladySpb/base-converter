@@ -4,6 +4,8 @@ namespace WladySpb\BaseConverter;
 
 
 use WladySpb\BaseConverter\Exceptions\IndexOutOfBondException;
+use WladySpb\BaseConverter\Exceptions\InvalidDelimiterException;
+use WladySpb\BaseConverter\Exceptions\InvalidNegateSymbolException;
 use WladySpb\BaseConverter\Exceptions\InvalidNumberBaseException;
 
 class Base
@@ -128,24 +130,24 @@ class Base
     /**
      * @param string $delimiter
      * @param string $characters
-     * @throws \Exception
+     * @throws InvalidDelimiterException
      */
     private function validateDelimiter(string $delimiter, string $characters)
     {
         if (strpos($characters, $delimiter) !== false) {
-            throw new \Exception('Characters can\'t contains delimiter');
+            throw new InvalidDelimiterException('Characters can\'t contains delimiter');
         }
     }
 
     /**
      * @param string $negateSymbol
      * @param string $characters
-     * @throws \Exception
+     * @throws InvalidNegateSymbolException
      */
     private function validateNegateSymbol(string $negateSymbol, string $characters)
     {
         if (strpos($characters, $negateSymbol) !== false) {
-            throw new \Exception('Characters can\'t contains negate symbol');
+            throw new InvalidNegateSymbolException('Characters can\'t contains negate symbol');
         }
     }
 }
