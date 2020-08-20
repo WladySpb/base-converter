@@ -54,7 +54,7 @@ class Base
         if (null === $characters) {
             $characters = Defaults::base($base);
             $this->defaultCharset = true;
-        } elseif (Defaults::base($base) === $characters) {
+        } elseif (Defaults::exists($base) && Defaults::base($base) === $characters) {
             $this->defaultCharset = true;
         }
 

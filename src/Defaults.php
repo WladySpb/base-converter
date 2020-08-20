@@ -7,16 +7,25 @@ class Defaults
 {
     /**
      * @param int $base
+     * @return bool
+     */
+    public static function exists(int $base): bool
+    {
+        return defined(self::class . "::BASE_{$base}");
+    }
+
+    /**
+     * @param int $base
      * @return string
      * @throws \Exception
      */
     public static function base(int $base): string
     {
-        if (!defined(self::class . "::BASE_($base)")) {
+        if (!defined(self::class . "::BASE_{$base}")) {
             throw new \Exception('Unsupported default Base');
         }
 
-        return constant(self::class . "::BASE_($base)");
+        return constant(self::class . "::BASE_{$base}");
     }
 
     const BASE_2 = '01';
