@@ -59,7 +59,7 @@ Please see [CONTRIBUTING](https://github.com/smart-lib/base-converter/blob/maste
 
 ## Credits
 
-- [:author_name](https://github.com/WladySpb)
+- [Vladimir Golubev](https://github.com/WladySpb)
 - [All Contributors](https://github.com/smart-lib/base-converter/contributors)
 
 ## License
