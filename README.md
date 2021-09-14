@@ -4,9 +4,9 @@ Convert numbers between any base you want, including negative numbers and floati
 
 * Including default bases from 2 to 64 symbols
 * Convert from and to custom charset
-* Convert negate numbers
-* Convert float numbers(with delimiter, without exponent)
-* Customize negate symbol and float delimiter  
+* Convert negative numbers
+* Convert floating point numbers(with delimiter, without exponent)
+* Customize minus sign and float delimiter  
 
 ## Install
 
@@ -21,30 +21,30 @@ $ composer require smart-lib/base-converter
 ### Simple:
 
 ``` php
-$converter = new WladySpb/BaseConverter();
-echo $converter->convert(100500, 10, 36);
-echo $converter->convert(-100500, 10, 36);
-echo $converter->convert(100500.99, 10, 64);
+$converter = new SmartLib/BaseConverter();
+echo $converter->convert('100500', 10, 36);
+echo $converter->convert('-100500', 10, 36);
+echo $converter->convert('100500.99', 10, 64);
 ```
 
 ### Custom charset:
    
    ``` php
-   $converter = new WladySpb/BaseConverter();
+   $converter = new SmartLib/BaseConverter();
    echo $converter
        ->from(10)
        ->to(6, 'QWERTY')
-       ->convert(100500, 10, 6);
+       ->convert('100500', 10, 6);
    ```
 
-### Change delimiter, change negate symbol:
+### Change delimiter, change minus sign:
 
 ``` php
-$converter = new WladySpb/BaseConverter();
+$converter = new SmartLib/BaseConverter();
 echo $converter
     ->from(10)
     ->to(36, null, ',', '~')
-    ->convert(-100.500, 10, 36);
+    ->convert('-100.500', 10, 36);
 ```
 
 ## Testing
@@ -59,7 +59,7 @@ Please see [CONTRIBUTING](https://github.com/smart-lib/base-converter/blob/maste
 
 ## Credits
 
-- [:author_name](https://github.com/WladySpb)
+- [Vladimir Golubev](https://github.com/WladySpb)
 - [All Contributors](https://github.com/smart-lib/base-converter/contributors)
 
 ## License

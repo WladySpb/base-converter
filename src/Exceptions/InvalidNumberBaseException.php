@@ -1,6 +1,6 @@
 <?php
 
-namespace WladySpb\BaseConverter\Exceptions;
+namespace SmartLib\BaseConverter\Exceptions;
 
 
 class InvalidNumberBaseException extends \Exception

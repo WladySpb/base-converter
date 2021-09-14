@@ -18,16 +18,16 @@
         "php" : ">=7.1.0"
     },
     "require-dev": {
-        "phpunit/phpunit" : "4.*"
+        "phpunit/phpunit" : "9.*"
     },
     "autoload": {
         "psr-4": {
-            "WladySpb\\BaseConverter\\": "src"
+            "SmartLib\\BaseConverter\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "WladySpb\\BaseConverter\\Test\\": "tests"
+            "SmartLib\\BaseConverter\\Test\\": "tests"
         }
     },
     "extra": {

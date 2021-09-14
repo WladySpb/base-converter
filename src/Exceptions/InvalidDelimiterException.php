@@ -1,8 +1,9 @@
 <?php
+
 namespace SmartLib\BaseConverter\Exceptions;
 
 
-class IndexOutOfBondException extends \Exception
+class InvalidDelimiterException extends \Exception
 {
 
 }
