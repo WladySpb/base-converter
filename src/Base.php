@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WladySpb\BaseConverter;
 
-
+use Exception;
 use WladySpb\BaseConverter\Exceptions\IndexOutOfBondException;
 use WladySpb\BaseConverter\Exceptions\InvalidNumberBaseException;
 
@@ -37,11 +39,11 @@ class Base
     /**
      * Base constructor.
      * @param int $base
-     * @param string $characters
+     * @param string|null $characters
      * @param string $delimiter
      * @param string $negateSymbol
      * @throws InvalidNumberBaseException
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(int $base, string $characters = null, string $delimiter = '.', string $negateSymbol = '-')
     {

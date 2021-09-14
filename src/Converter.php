@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WladySpb\BaseConverter;
 
 use WladySpb\BaseConverter\Exceptions\InvalidNumberBaseException;
 
 class Converter
 {
-
     public const BASE_2 = 2;
     public const BASE_8 = 8;
     public const BASE_10 = 10;
@@ -27,26 +28,38 @@ class Converter
     /**
      * @param int $base
      * @param string|null $customCharset
+     * @param string $delimiter
+     * @param string $negateSymbol
      * @return $this
      * @throws InvalidNumberBaseException
      */
-    public function from(int $base, string $customCharset = null)
-    {
+    public function from(
+        int $base,
+        string $customCharset = null,
+        string $delimiter = '.',
+        string $negateSymbol = '-'
+    ): self {
         $this->fromBase = $base;
-        $this->setBase($base, $customCharset);
+        $this->setBase($base, $customCharset, $delimiter, $negateSymbol);
         return $this;
     }
 
     /**
      * @param int $base
      * @param string|null $customCharset
+     * @param string $delimiter
+     * @param string $negateSymbol
      * @return $this
      * @throws InvalidNumberBaseException
      */
-    public function to(int $base, string $customCharset = null)
-    {
+    public function to(
+        int $base,
+        string $customCharset = null,
+        string $delimiter = '.',
+        string $negateSymbol = '-'
+    ): self {
         $this->toBase = $base;
-        $this->setBase($base, $customCharset);
+        $this->setBase($base, $customCharset, $delimiter, $negateSymbol);
         return $this;
     }
 
@@ -57,7 +70,7 @@ class Converter
      * @return string
      * @throws InvalidNumberBaseException
      */
-    public function convert(string $number, int $from = null, int $to = null)
+    public function convert(string $number, int $from = null, int $to = null): string
     {
         $from && $this->from($from);
         $to && $this->to($to);
@@ -65,14 +78,14 @@ class Converter
         return $this->negateNumber($number);
     }
 
-    private function negateNumber(string $number)
+    private function negateNumber(string $number): string
     {
         return (strpos($number, $this->bases[$this->fromBase]->negateSymbol()) === 0)
             ? $this->bases[$this->toBase]->negateSymbol() . $this->floatingPointNumbers(substr($number, 1))
             : $this->floatingPointNumbers($number);
     }
 
-    private function floatingPointNumbers(string $number)
+    private function floatingPointNumbers(string $number): string
     {
         return implode(
             $this->bases[$this->toBase]->delimiter(),
@@ -91,7 +104,7 @@ class Converter
      * @return float|int|string
      * @throws Exceptions\IndexOutOfBondException
      */
-    private function convertNumber(string $number)
+    private function convertNumber(string $number): string
     {
         if ($this->canSimpleConvert() ) {
             return base_convert($number, $this->fromBase, $this->toBase);
@@ -100,7 +113,7 @@ class Converter
         return $this->baseConvert($number, $this->bases[$this->fromBase], $this->bases[$this->toBase]);
     }
 
-    private function  canSimpleConvert() : bool
+    private function canSimpleConvert() : bool
     {
         return (
                 $this->bases[$this->fromBase]->isDefault()
@@ -109,14 +122,21 @@ class Converter
             &&  $this->toBase <= 36
         );
     }
+
     /**
      * @param int $base
      * @param string|null $customCharset
+     * @param string $delimiter
+     * @param string $negateSymbol
      * @throws InvalidNumberBaseException
      */
-    private function setBase(int $base, string $customCharset = null)
-    {
-        $this->bases[$base] = new Base($base, $customCharset);
+    private function setBase(
+        int $base,
+        string $customCharset = null,
+        string $delimiter = '.',
+        string $negateSymbol = '-'
+    ): void {
+        $this->bases[$base] = new Base($base, $customCharset, $delimiter, $negateSymbol);
     }
 
     /**
@@ -149,7 +169,7 @@ class Converter
         if ($numberInput < $toBase->base())
             return $toBase->char($numberInput);
 
-        return $this->convertTenToBase($numberInput, $toBase->charset());
+        return $this->convertTenToBase((string)$numberInput, $toBase->charset());
     }
 
     private function convertToBaseTen(array $number, array $fromBase)
